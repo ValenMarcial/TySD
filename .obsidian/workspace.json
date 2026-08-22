@@ -8,35 +8,20 @@
         "type": "tabs",
         "children": [
           {
-            "id": "6eec0a66a1ddfd88",
-            "type": "leaf",
-            "state": {
-              "type": "split-diff-view",
-              "state": {
-                "aFile": ".obsidian/workspace.json",
-                "bFile": ".obsidian/workspace.json",
-                "aRef": ""
-              },
-              "icon": "diff",
-              "title": "Diff: workspace.json  (Working Tree)"
-            }
-          },
-          {
             "id": "a963943550ed2f6a",
             "type": "leaf",
             "state": {
-              "type": "split-diff-view",
+              "type": "markdown",
               "state": {
-                "aFile": ".obsidian/community-plugins.json",
-                "bFile": ".obsidian/community-plugins.json",
-                "aRef": ""
+                "file": "Practico1/Practico 1.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "diff",
-              "title": "Diff: community-plugins.json  (Working Tree)"
+              "icon": "lucide-file",
+              "title": "Practico 1"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -214,7 +199,15 @@
   },
   "active": "a963943550ed2f6a",
   "lastOpenFiles": [
+    "Practico1/__pycache__/node.cpython-314.pyc",
+    "Practico1/__pycache__",
+    "Practico1/network.json",
+    "Practico1/node.py",
+    "Practico1/RADME.md",
+    "Practico1/ping.py",
+    "Practico1/pong.py",
     "Practico1/Practico 1.md",
+    "Practico1/Práctico 1 - SD - 2026.pdf",
     "conflict-files-obsidian-git.md",
     "Practico1"
   ]

@@ -1,8 +1,5 @@
 [
-<<<<<<< HEAD
   "obsidian-git",
-  "obsidian-excalidraw-plugin"
-=======
-  "obsidian-git"
->>>>>>> origin/main
+  "obsidian-excalidraw-plugin",
+  "obsidian-latex-suite"
 ]
