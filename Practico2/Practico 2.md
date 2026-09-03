@@ -109,3 +109,11 @@ Comenzamos a dividir por el generador 1101
 ```
 El resto es 0101 por lo tanto el paquete esta corrupto y se descarta
 
+
+## 5)
+
+![[Ejercicio5P2.excalidraw]]
+
+### e)
+![[Eje5P2e.excalidraw]]
+
