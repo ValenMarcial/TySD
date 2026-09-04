@@ -117,3 +117,9 @@ El resto es 0101 por lo tanto el paquete esta corrupto y se descarta
 ### e)
 ![[Eje5P2e.excalidraw]]
 
+## 6)
+Leer [[Practico2/README|README]] para ejecutar kathara con la configuracion que creamos
+Para agregar una nueva pc al mismo switch se agrega al lab.conf esto
+pc3[0]="A/00:00:00:00:00:03"
+pc3[image]="kathara/base"
+pc3[ipv6]="false"
