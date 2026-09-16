@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "b2c4bc8952ced71d",
+        "id": "16378345735d50d3",
         "type": "tabs",
         "children": [
           {
-            "id": "5c826656d9bb0656",
+            "id": "08301e202d7f2189",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "split-diff-view",
               "state": {
-                "file": "Practico3/Practico 3.md",
-                "mode": "source",
-                "source": false
+                "aFile": ".obsidian/plugins/obsidian-latex-suite/styles.css",
+                "bFile": ".obsidian/plugins/obsidian-latex-suite/styles.css",
+                "aRef": ""
               },
-              "icon": "lucide-file",
-              "title": "Practico 3"
+              "icon": "diff",
+              "title": "Diff: styles.css  (Working Tree)"
             }
           }
         ]
@@ -197,10 +197,11 @@
       "obsidian-excalidraw-plugin:Nuevo Bosquejo": false
     }
   },
-  "active": "5c826656d9bb0656",
+  "active": "08301e202d7f2189",
   "lastOpenFiles": [
-    "images/Pasted image 20260914233022.png",
     "Practico3/Practico 3.md",
+    "Practico1/Practico 1.md",
+    "images/Pasted image 20260914233022.png",
     "Practico2/README.md",
     "Practico2/Practico 2.md",
     "images/Pasted image 20260914225837.png",
@@ -213,7 +214,6 @@
     "Excalidraw/Ejercicio5P2.excalidraw.md",
     "Excalidraw/Eje5P2e.excalidraw.md",
     "Excalidraw",
-    "Practico1/Practico 1.md",
     "Practico2/simulator",
     "Practico2/simulate-package.c",
     "Practico2/parity",
