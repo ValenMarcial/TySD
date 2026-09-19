@@ -198,3 +198,172 @@ $$
   A-F\#2 & 18 & 0 & 19 & 1 \\ \hline
   \end{array}
 $$
+
+## 4)
+### 1)
+Tengo un route con 3 interfaces
+eth0 -> Conectada al ISP (WAN) y la IP  es 200.71.49.56 
+El router del ISP tiene IP 200.71.49.1
+
+Se requiere configurar dos redes internas A y B con direcciones priovadas, cada red no va tener mas de 253 hosts cada una 
+eth1 -> A
+eth2 -> B
+
+![[DiagramaRedFisica.excalidraw]]
+
+### 2)
+Como dice el enunciado cada subred tiene 253 hosts por lo tanto usa una mascara con /24 que serian 8 bits de host por lo tanto usa la mascara 255.255.255.0
+
+Para subdividir la red deberia elegir 192.168.x.0/24
+
+Verificamos que /24 alcanza para 253 hosts
+Con mascara 255.255.255.0 quie es el /24
+- Direcciones totales de 0 a 255
+- Direccion de la red: 192.1668.10.0 no se asigna a host
+- Direccion de broadcast: 192.168.10.255 no se asigna a host
+- Direcciones usables .1 a .254
+- De esas 254 redes una la usa el router y quedan 253
+
+Ahora asignamos las redes
+$$
+\begin{array}{ |c|c|c|c| }
+  \hline
+  Interfaz & Red & ip asignada & Rol \\ \hline
+   eth0 & 200.71.49.1 & 200.71.49.56 & \textbf{Asignada por el ISP} \\ \hline
+   eth1 & 192.168.10.0 & 192.168.10.1/24 & \textbf{Gateway Subred A} \\ \hline
+   eth2 & 192.168.20.1/24 & 192.168.20.1/24 & \textbf{Gateway Subred B} \\ \hline
+  \end{array}
+$$
+
+Ahora las direcciones para los host de la subred A son:
+192.168.10.2
+192.168.10.3
+192.168.10.4
+192.168.10.5
+...
+192.168.10.254
+
+Y las direcciones para los host de la subred B son:
+192.168.20.2
+192.168.20.3
+192.168.20.4
+192.168.20.5
+...
+192.168.20.254
+
+no es necesario que cada host le siga la sucesiva puede tener H1 la 2 y H2 la 15 no importa el orden
+
+### 3)
+#### a) Los host de ambas sub redes pueden comunicarse
+La tabla de ruteo del router es:
+$$
+\begin{array}{ |c|c|c| }
+  \hline
+   Destino & Mascara& Interfaz \\ \hline
+    192.168.10.0 & /24 & eth1 (directa) \\ \hline
+    192.168.20.0 & /24 & eth2 (directa) \\ \hline
+	0.0.0.0(default) & /0 & eth0 -> 200.71.49.1 (ISP)\\ \hline
+  \end{array}
+$$
+
+La tabla de ruteo de un host de A es:
+$$
+\begin{array}{ |c|c|| }
+  \hline
+   Destino & GateWay \\ \hline
+    192.168.10.0/24 & \textbf{directa misma red} \\ \hline
+    0.0.0.0(default) & 192.168.10.1 \text{(eth1 del router)}\\ \hline
+  \end{array}
+$$
+
+La tabla de ruteo de un host de B es:
+$$
+\begin{array}{ |c|c|| }
+  \hline
+   Destino & GateWay \\ \hline
+    192.168.20.0/24 & \textbf{directa misma red} \\ \hline
+    0.0.0.0(default) & 192.168.20.1 \text{(eth2 del router)}\\ \hline
+  \end{array}
+$$
+
+#### b) Los hosts de ambas subredes no deben comunicarse
+Con las tablas de ruteop no alcanza para que no se comuniquen, por que el router tiene ambas redes conectadas y hay que agregar una regla de filtrado en el router
+Las tablas de ruteo quedan iguales:
+La tabla de ruteo del router es:
+$$
+\begin{array}{ |c|c|c| }
+  \hline
+   Destino & Mascara& Interfaz \\ \hline
+    192.168.10.0 & /24 & eth1 (directa) \\ \hline
+    192.168.20.0 & /24 & eth2 (directa) \\ \hline
+	0.0.0.0(default) & /0 & eth0 -> 200.71.49.1 (ISP)\\ \hline
+  \end{array}
+$$
+
+La tabla de ruteo de un host de A es:
+$$
+\begin{array}{ |c|c|| }
+  \hline
+   Destino & GateWay \\ \hline
+    192.168.10.0/24 & \textbf{directa misma red} \\ \hline
+    0.0.0.0(default) & 192.168.10.1 \text{(eth1 del router)}\\ \hline
+  \end{array}
+$$
+
+La tabla de ruteo de un host de B es:
+$$
+\begin{array}{ |c|c|| }
+  \hline
+   Destino & GateWay \\ \hline
+    192.168.20.0/24 & \textbf{directa misma red} \\ \hline
+    0.0.0.0(default) & 192.168.20.1 \text{(eth2 del router)}\\ \hline
+  \end{array}
+$$
+
+Lo que hacemos es agregar reglas de forwarding con el comando iptables
+```bash
+iptables -A FORWARD -s 192.168.10.0/24 -d 192.168.20.0/24 -j DROP
+iptables -A FORWARD -s 192.168.20.0/24 -d 192.168.10.0/24 -j DROP
+```
+Esato le dice al router sabes el camino pero no reenvies paquetes que vayan de A a B ni de B a A
+
+#### c)Los host de la subred A pueden alcanzar solo a un dispositivo de la red B. Este dispositicco deberia acceder a cualquier host de A Y B
+Las tablas quedan iguales:
+La tabla de ruteo del router es:
+$$
+\begin{array}{ |c|c|c| }
+  \hline
+   Destino & Mascara& Interfaz \\ \hline
+    192.168.10.0 & /24 & eth1 (directa) \\ \hline
+    192.168.20.0 & /24 & eth2 (directa) \\ \hline
+	0.0.0.0(default) & /0 & eth0 -> 200.71.49.1 (ISP)\\ \hline
+  \end{array}
+$$
+
+La tabla de ruteo de un host de A es:
+$$
+\begin{array}{ |c|c|| }
+  \hline
+   Destino & GateWay \\ \hline
+    192.168.10.0/24 & \textbf{directa misma red} \\ \hline
+    0.0.0.0(default) & 192.168.10.1 \text{(eth1 del router)}\\ \hline
+  \end{array}
+$$
+
+La tabla de ruteo de un host de B es:
+$$
+\begin{array}{ |c|c|| }
+  \hline
+   Destino & GateWay \\ \hline
+    192.168.20.0/24 & \textbf{directa misma red} \\ \hline
+    0.0.0.0(default) & 192.168.20.1 \text{(eth2 del router)}\\ \hline
+  \end{array}
+$$
+
+Lo que hacemos por ejemplo para conectar con una impresora que esta en la direccion 192.168.20.15 es
+```bash
+iptables -A FORWARD -s 192.168.10.0/24 -d 192.168.20.15 -j ACCEPT
+iptables -A FORWARD -s 192.168.10.0/24 -d 192.168.20.0/24 -j DROP
+```
+Con esto bloqueamos todo lo que va de A a cualquier otra ip de B que no sea 192.168.20.15
+

@@ -1,0 +1,7 @@
+ip addr add 200.71.49.56/24 dev eth0
+ip addr add 192.168.10.0/24 dev eth1
+ip addr add 192.168.20.0/24 dev eth2
+
+ip route add default via 200.71.49.1 dev eth0
+
+echo 1 > /proc/sys/net/ipv4/ip_forward
