@@ -212,8 +212,10 @@
       "obsidian-excalidraw-plugin:Nuevo Bosquejo": false
     }
   },
-  "active": "83d1cf7bffa139f5",
+  "active": "560926c538c4f516",
   "lastOpenFiles": [
+    "Practico4/pc2.startup",
+    "Practico4/pc1.startup",
     "Practico4/echo_tcp_server_secuential_select.py",
     "Practico4/echo_tcp_server_fork.py",
     "Practico4/echo_tcp_server_threads.py",
@@ -229,8 +231,6 @@
     "Practico4/udp-server.c",
     "Practico4/udp-client.c",
     "Practico4/chat-client.py",
-    "Practico4/echo_tcp_server.py",
-    "Practico4/echo_tcp_client.py",
     "Practico3/Practico 3.md",
     "README.md",
     "images/Pasted image 20260922204306.png",
