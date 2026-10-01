@@ -177,3 +177,107 @@ Una vez se realiza una conexion recibe hasta 1024 bytes, toma esos bytes y lo re
 Lo que hace `echo_tcp_client.py`
 Crea un socket  y se conecta por localhost al puerto 65432.
 Una vez se conecta al server tcp envia la cadena Hello world en bytes y se queda esperando a recibir hasta 1024 bytes que mandara el servidor.
+
+# 6)
+Como UDP no garantiza entrega y orden.
+1) Los paquetes de datos de (cliente a servidor) lleva:
+- tipo:
+	- 0: Inicio / metadata
+	- 1: Datos del archivo (bloque binario)
+	- 2: Fin de transmision (EOF)
+- seq_num: 1 byte que alterna entre 0 y 1
+- payload: una varialble de hasta 1024bytes por ejemplo, nombre de archivop o fragmento binario
+2) Los paquetes de confirmacion / ACK (servidor a cliente) lleva:
+- tipo (1 byte):  3 (ACK)
+- ack_num (1 byte): 0 o 1 (el numero de secuencia que se esta confirmando)
+
+```txt
+Estructura Datagrama de Datos: 
++---------------+---------------+---------------------------------------+ 
+| Tipo (1 byte) | Seq (1 byte) | Datos / Payload (hasta 1024 bytes)     |
++----------------+---------------+--------------------------------------+ 
+
+Estructura Datagrama de ACK: 
++---------------+---------------+ 
+| Tipo=3 (1 B) | Ack (1 byte)   |
++---------------+---------------+
+```
+
+Con `struct.pack('!BB', tipo, seq)` generamos la cabecera fija de 2 bytes en formato de red (_big-endian_).
+
+## Servidor:
+El servidor recibe cada paquete, verifica si el numero de secuencia coincide con el que espera:
+- Coincide: escribe los datos y conmuta el bit esperado (0 -> 1 -> 0)
+- Es duplicado: un paquete viejo que llego tarde o cuyo ACK se perdio, se descarta el payload y reenvia el ACK correspondiente para que el cliente pueda avanzar.
+
+**`expected_seq = 0`:** Es el corazón del protocolo. Es el número de secuencia que el servidor **espera recibir a continuación**. Arranca en `0` porque el cliente siempre empieza mandando con `seq = 0`.
+**`file_handle = None`:** El descriptor de archivo donde se escribirán los bytes recibidos en disco una vez que sepamos el nombre.
+
+El desempaquetado de la cabecera:
+Cuando llega un datagrama UDP el servidor extrae la cabecera fija de 2 bytes:
+```python
+packet, addr = server_socket.recvfrom(BUFFER_SIZE)
+if len(packet) < 2:
+    continue
+
+pkt_type, seq_num = struct.unpack("!BB", packet[:2])
+payload = packet[2:]
+```
+- `packet[:2]`: Toma los primeros dos bytes (la cabecera).
+- `struct.unpack("!BB", ...)`:
+    - `!`: Formato estándar de red (_network byte order_ / _big-endian_).
+    - `B`: _Unsigned char_ de 1 byte (rango de 0 a 255).
+    - `pkt_type`: Tipo de paquete (`0`: Nombre/Metadata, `1`: Datos, `2`: Fin/EOF).
+    - `seq_num`: Número de secuencia enviado por el cliente (`0` o `1`).
+- `payload = packet[2:]`: Todos los bytes que vienen a partir del byte 2 en adelante corresponden al contenido real (nombre del archivo o trozo binario).
+
+El ACK siempre  responder:
+Inmediatamente despues de desempaquetar enviar el servidor ejecuta
+```python
+# Enviar siempre el ACK del paquete recibido
+ack_packet = struct.pack("!BB", 3, seq_num)
+server_socket.sendto(ack_packet, addr)
+```
+arma el paquete ACK  con el seq_num y se lo manda al emisor.
+Recibimos siempre aunque sea duplicado por que eso significa que el ACK del servidor se perdio y hay que reenviarlo, ese filtro viene debajo
+
+Filtrado de duplicados y alternancia de bits:
+```python
+if seq_num == expected_seq:
+    # --- PAQUETE NUEVO Y VÁLIDO ---
+    ...
+    expected_seq = 1 - expected_seq  # Alterna 0 -> 1 -> 0
+else:
+    # --- PAQUETE DUPLICADO ---
+    pass
+```
+- **Si `seq_num == expected_seq`:**
+    Es el bloque que tocaba recibir. Se procesa su contenido y se ejecuta `expected_seq = 1 - expected_seq`. Esta operación aritmética conmuta el bit esperado ($1 - 0 = 1$; luego $1 - 1 = 0$). A partir de ese instante, el servidor solo aceptará el siguiente número.
+- **Si `seq_num != expected_seq`:**
+    Es un paquete duplicado (retransmisión tardía). El servidor ya le mandó el ACK dos líneas más arriba, pero **no procesa ni escribe nada en disco**. Esto previene que el archivo final quede con partes repetidas o corruptas.
+
+Las tres acciones segun el pkt_type:
+dentro del bloque valido
+1) **`pkt_type == 0` (Metadata / Inicio):**
+```python
+filename = "recv_" + payload.decode("utf-8", errors="ignore")
+file_handle = open(filename, "wb")
+```
+El payload contiene el nombre del archivo en texto UTF-8. El servidor lo decodifica, le antepone `recv_` para no pisar el archivo original si cliente y servidor corren en la misma carpeta, y abre el archivo en modo binario de escritura (`"wb"`).
+
+2) **`pkt_type == 1` (Datos):**
+```python
+if file_handle:
+	file_handle.write(payload)
+```
+Escribe el fragmento exacto de bytes directamente al archivo en disco.
+
+3) **`pkt_type == 2` (EOF / Fin de transmisión):**
+```python
+if file_handle:
+	file_handle.close()
+break
+```
+Cierra el descriptor de archivo para vaciar los búferes al disco (`flush`/`close`) y ejecuta `break` para salir del bucle interno.
+
+Terminar de ver el cliente en otro momento
