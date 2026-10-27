@@ -4,39 +4,24 @@
     "type": "split",
     "children": [
       {
-        "id": "1a268c0bcf444a8c",
+        "id": "487dcb064eb09c0b",
         "type": "tabs",
         "children": [
           {
-            "id": "49d7d756a3f4e731",
+            "id": "3752d6d94a6dcaee",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Practico3/Practico 3.md",
+                "file": "Practico5/Practico5.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Practico 3"
-            }
-          },
-          {
-            "id": "83d1cf7bffa139f5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Practico4/Practico 4.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Practico 4"
+              "title": "Practico5"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -212,40 +197,53 @@
       "obsidian-excalidraw-plugin:Nuevo Bosquejo": false
     }
   },
-  "active": "83d1cf7bffa139f5",
+  "active": "3752d6d94a6dcaee",
   "lastOpenFiles": [
-    "Practico4/protocolo_propio_cliente.py",
-    "Practico4/protcolo_propio_server.py",
-    "Practico4/pc2.startup",
-    "Practico4/pc1.startup",
-    "Practico4/echo_tcp_server_secuential_select.py",
-    "Practico4/echo_tcp_server_fork.py",
-    "Practico4/echo_tcp_server_threads.py",
+    "Practico5/clock-app/__pycache__/bottle.cpython-314.pyc.125381538906928",
+    "Practico5/clock-app.zip",
+    "Practico5/chat-app.zip",
+    "Practico5/clock-app/public/index.html",
+    "Practico5/clock-app/public/clock.png",
+    "Practico5/clock-app/__pycache__/bottle.cpython-314.pyc",
+    "Practico5/clock-app/public",
+    "Practico5/clock-app/http-server.py",
+    "Practico5/clock-app/bottle.py",
+    "Practico5/clock-app/__pycache__",
+    "Practico5/clock-app",
+    "Practico5/chat-app/node_modules/send/node_modules/ms/readme.md",
+    "Practico5/chat-app/node_modules/send/node_modules/ms/package.json",
+    "Practico5/chat-app/node_modules/send/node_modules/ms/license.md",
+    "Practico5/chat-app/node_modules/ws/README.md",
+    "Practico5/chat-app/node_modules/vary/README.md",
+    "Practico5/chat-app/node_modules/vary/HISTORY.md",
+    "Practico5/chat-app/node_modules/utils-merge/README.md",
+    "Practico5/chat-app/node_modules/unpipe/README.md",
+    "Practico5/chat-app/node_modules/unpipe/HISTORY.md",
+    "Practico5/chat-app/node_modules/type-is/README.md",
+    "Practico5/chat-app/node_modules/type-is/HISTORY.md",
+    "Practico5/chat-app/node_modules/toidentifier/README.md",
+    "Practico5/chat-app/node_modules/toidentifier/HISTORY.md",
+    "Practico5/chat-app/node_modules/statuses/README.md",
+    "Practico5/chat-app/node_modules/statuses/HISTORY.md",
+    "Practico5/chat-app/node_modules/side-channel-weakmap/README.md",
+    "Practico5/chat-app/node_modules/side-channel-weakmap/CHANGELOG.md",
+    "Practico5/chat-app/node_modules/side-channel-map/README.md",
+    "Practico5/chat-app/node_modules/side-channel-map/CHANGELOG.md",
+    "Practico5/chat-app/node_modules/side-channel-list/README.md",
+    "Practico5/chat-app/node_modules/side-channel-list/CHANGELOG.md",
+    "Practico5/chat-app/node_modules/side-channel/README.md",
+    "Practico5/chat-app/node_modules/side-channel/CHANGELOG.md",
+    "Practico5/chat-app/node_modules/setprototypeof/README.md",
+    "Practico5/chat-app/node_modules/serve-static/README.md",
+    "Practico5/chat-app/node_modules/serve-static/HISTORY.md",
+    "Practico5/Pasted image 20261026132601.png",
+    "Pasted image 20261026132418.png",
+    "Pasted image 20261026132302.png",
+    "Pasted image 20261006194654.png",
+    "Pasted image 20261006194641.png",
+    "Pasted image 20261006135646.png",
     "Practico4/Pasted image 20260930215811.png",
     "Practico4/Pasted image 20260930202404.png",
-    "Practico4/Pasted image 20260930194728.png",
-    "Practico4/Pasted image 20260930194456.png",
-    "Pasted image 20260930194349.png",
-    "Practico4/Practico 4.md",
-    "Practico4/chat-server.py",
-    "Practico4/udp-server.py",
-    "Practico4/udp-client.py",
-    "Practico4/udp-server.c",
-    "Practico3/Practico 3.md",
-    "README.md",
-    "images/Pasted image 20260922204306.png",
-    "Excalidraw/DiagramaRedFisicaConIps.excalidraw.md",
-    "Excalidraw/DiagramaRedFisica.excalidraw.md",
-    "Excalidraw/Sin título.md",
-    "Excalidraw/Eje5P2e.excalidraw.md",
-    "Practico1/Practico 1.md",
-    "images/Pasted image 20260914233022.png",
-    "Practico2/README.md",
-    "Practico2/Practico 2.md",
-    "images/Pasted image 20260914225837.png",
-    "images/Pasted image 20260914235303.png",
-    "Excalidraw/Ejercicio5P2.excalidraw.md",
-    "Practico1/RADME.md",
-    "conflict-files-obsidian-git.md"
+    "Practico4/Pasted image 20260930194728.png"
   ]
 }

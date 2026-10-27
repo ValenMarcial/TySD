@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebSocket client test</title>
+  </head>
+
+  <body>
+    <h1>WebSocket Client Test</h1>
+    <textarea id="msg" rows="1" cols="40">Message</textarea> 
+    <button onclick="send()">Send Message</button>
+    <div id="log"></div>
+
+<script language="javascript" type="text/javascript">
+
+    var wsUri = "ws://localhost:8000";
+    var log = document.getElementById("log");;
+
+    function connectWebSocket()
+    {
+      websocket = new WebSocket(wsUri);
+      websocket.onopen    = function(event) { onOpen(event)    };
+      websocket.onclose   = function(event) { onClose(event)   };
+      websocket.onmessage = function(event) { onMessage(event) };
+      websocket.onerror   = function(event) { onError(event)   };
+    }
+
+    function onOpen(event)
+    {
+      writeLog("CONNECTED");
+      sendMessage("Hello world");
+    }
+
+    function onClose(event)
+    {
+      writeLog("Websocket DISCONNECTED");
+    }
+
+    function onMessage(eventt)
+    {
+      writeLog('<span style="color: blue;">RESPONSE: ' + event.data+'</span>');
+      // websocket.close();
+    }
+
+    function onError(event)
+    {
+      writeLog('<span style="color: red;">ERROR:</span> ' + event);
+    }
+
+    function sendMessage(message)
+    {
+      writeLog("SENT: " + message);
+      websocket.send(message);
+    }
+
+    function send() {
+        let msg = document.getElementById('msg').value;
+        sendMessage(msg);
+    }
+
+    function writeLog(message)
+    {
+      var pre = document.createElement("p");
+      pre.innerHTML = message;
+      log.appendChild(pre);
+    }
+
+    connectWebSocket();
+
+</script>
+</body>
+</html>
