@@ -165,3 +165,44 @@ Bottle lee el dato y responde con JSON
 ```
 
 Al entrar a `http://localhost:8080/`, el puerto `8080` es el destino del servidor; el puerto de origen del cliente suele ser otro, asignado temporalmente.
+
+# 4)
+Todo hecho en visual studio code
+
+# 5)
+- `openssl s_client`: Ejecuta la herramienta de OpenSSL para actuar como un cliente SSL/TLS.
+- `-connect smtp.gmail.com:465`: Se conecta al nombre de host del servidor SMTP de Gmail en el puerto **465** (puerto estándar para SMTPS con cifrado SSL/TLS implícito).
+- `-crlf`: Convierte los saltos de línea al estándar que exige el protocolo SMTP (`\r\n` o _Carriage Return + Line Feed_). Sin este parámetro, el servidor puede rechazar los comandos.
+- - `-ign_eof`: Mantiene la conexión abierta aunque envíes un fin de archivo (EOF).
+
+Gmail no permite autenticarse con tu contraseña habitual en este tipo de conexiones manuales. Necesitas:
+1. Tener activada la **Verificación en dos pasos** en tu cuenta de Google.
+2. Generar una **Contraseña de aplicación** desde la configuración de seguridad de tu cuenta de Google (un código de 16 letras).
+   Ingresamos aca myaccount.google.com/apppasswords, logueamos, creamos un nombre para la app en este caso `SMTP redes 2026` y nos muestra una clave `glyv ulcp bvpp cfvh`
+
+3. Obtener el usuario (tu correo) y la contraseña de aplicación codificados en **Base64**, ya que el mecanismo de autenticación SMTP lo requiere así.
+
+Para codificar en base64:
+```bash
+echo -n "marcialvalentin190@gmail.com" | base64
+echo -n "glyvulcpbvppcfvh" | base64
+```
+
+Hasta ahora los pasos son
+1) `openssl s_client -connect smtp.gmail.com:465 -crlf`
+2) Escribir `ehlo localhost`
+3) Escribir `auth login`:
+   Primero nos pide el usuario que es nuesto gmail en base 64 `334 VXNlcm5hbWU6` pegamos  el resultado de `echo -n "marcialvalentin190@gmail.com" | base64`, luego pide la contraseña `334 UGFzc3dvcmQ6` que es el resultado de  `glyvulcpbvppcfvh`. Si responde OK esta todo bien
+4) `mail from: <tumail@gmail.com>`
+5) `rcpt to: <mailquerecibe@gmail.com>`
+6) `data` indica al servidor que voy a emepezar a escribir el cuerpo del mensaje, esto debe responder `354 Go head`
+7) A continuación, escribe los encabezados (Subject, From, To), deja una línea en blanco y escribe el cuerpo. Para finalizar la transmisión del correo, coloca **únicamente un punto (`.`) en una línea nueva** y presiona `Enter`, por ejemplo:
+   ```bash
+   From: tu_correo@gmail.com
+   To: destinatario@ejemplo.com
+   Subject: Prueba de correo con OpenSSL
+   
+   Hola, este es un mensaje enviado manualmente utilizando el protocolo SMTP a traves de OpenSSL.
+   .
+   ```
+   1) `quit` para cerrar la conexión.
