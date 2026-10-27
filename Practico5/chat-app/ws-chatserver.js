@@ -1,7 +1,7 @@
 const express = require('express')
 const webserver = express()
   .use((req, res) =>
-    res.sendFile('/wsclient.html', { root: __dirname })
+    res.sendFile('/wsclient1.html', { root: __dirname })
   )
   .listen(8080, () => console.log(`Listening on ${8080}`))
 

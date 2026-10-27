@@ -197,8 +197,12 @@
       "obsidian-excalidraw-plugin:Nuevo Bosquejo": false
     }
   },
-  "active": "3752d6d94a6dcaee",
+  "active": "560926c538c4f516",
   "lastOpenFiles": [
+    "Practico5/chat-app/wsclient-json.html",
+    "Practico5/chat-app/ws-chatserver-json.js",
+    "Practico5/chat-app/wsclient1.html",
+    "Practico5/chat-app/mise.toml",
     "Practico5/clock-app/__pycache__/bottle.cpython-314.pyc.125381538906928",
     "Practico5/clock-app.zip",
     "Practico5/chat-app.zip",
@@ -207,11 +211,7 @@
     "Practico5/clock-app/__pycache__/bottle.cpython-314.pyc",
     "Practico5/clock-app/public",
     "Practico5/clock-app/http-server.py",
-    "Practico5/clock-app/bottle.py",
-    "Practico5/clock-app/__pycache__",
-    "Practico5/clock-app",
     "Practico5/chat-app/node_modules/send/node_modules/ms/readme.md",
-    "Practico5/chat-app/node_modules/send/node_modules/ms/package.json",
     "Practico5/chat-app/node_modules/send/node_modules/ms/license.md",
     "Practico5/chat-app/node_modules/ws/README.md",
     "Practico5/chat-app/node_modules/vary/README.md",

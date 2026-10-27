@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebSocket client test</title>
+  </head>
+  <body>
+    <h1>WebSocket Client Test</h1>
+
+    <form id="connectForm">
+      <input id="user" placeholder="Usuario" required>
+      <input id="httpUrl" placeholder="http://192.168.100.18:8080" required>
+      <button>Conectar</button>
+    </form>
+
+    <p id="status"></p>
+    <p id="urls"></p>
+
+    <textarea id="msg" rows="1" cols="40">Message</textarea>
+    <button onclick="send()">Send Message</button>
+    <div id="log"></div>
+
+    <script>
+      const status = document.getElementById('status');
+      const httpUrlInput = document.getElementById('httpUrl');
+      let websocket = null;
+      let user = '';
+
+      httpUrlInput.value = location.host ? location.origin : 'http://localhost:8080';
+
+      document.getElementById('connectForm').onsubmit = (event) => {
+        event.preventDefault();
+
+        let httpUrl;
+        try {
+          httpUrl = new URL(httpUrlInput.value);
+        } catch {
+          status.textContent = 'URL inválida';
+          return;
+        }
+
+        user = document.getElementById('user').value.trim();
+        const wsUrl = (httpUrl.protocol === 'https:' ? 'wss://' : 'ws://')
+          + httpUrl.hostname + ':8000';
+
+        status.textContent = 'Conectando a ' + wsUrl;
+        document.getElementById('urls').textContent =
+          'HTTP: ' + httpUrl.href + ' | WS: ' + wsUrl;
+
+        if (websocket) {
+          websocket.onclose = null;
+          websocket.close();
+        }
+
+        websocket = new WebSocket(wsUrl);
+
+        websocket.onopen = () => {
+          status.textContent = 'Conectado como ' + user;
+        };
+
+        websocket.onmessage = (event) => {
+          let text = event.data;
+          try {
+            const data = JSON.parse(event.data);
+            if (typeof data.user === 'string' && typeof data.message === 'string') {
+              text = data.user + ': ' + data.message;
+            }
+          } catch {}
+          writeLog(text);
+        };
+
+        websocket.onerror = () => {
+          status.textContent = 'No se pudo conectar a ' + wsUrl;
+        };
+
+        websocket.onclose = () => {
+          if (!status.textContent.startsWith('No se pudo')) {
+            status.textContent = 'Desconectado';
+          }
+        };
+      };
+
+      function send() {
+        if (!websocket || websocket.readyState !== WebSocket.OPEN) {
+          return;
+        }
+
+        websocket.send(JSON.stringify({
+          user: user,
+          message: document.getElementById('msg').value
+        }));
+      }
+
+      function writeLog(message) {
+        const p = document.createElement('p');
+        p.textContent = message;
+        document.getElementById('log').appendChild(p);
+      }
+    </script>
+  </body>
+</html>
