@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "1b186bcde2723ba0",
+        "id": "d3e21146be3a2cf3",
         "type": "tabs",
         "children": [
           {
-            "id": "6ef670c1a62d99bd",
+            "id": "d53b18c01a3eb857",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Practico6/Practico 6.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Practico 6"
+              "title": "Nueva pestaña"
             }
           }
         ]
@@ -197,13 +193,21 @@
       "obsidian-excalidraw-plugin:Nuevo Bosquejo": false
     }
   },
-  "active": "6ef670c1a62d99bd",
+  "active": "560926c538c4f516",
   "lastOpenFiles": [
-    "Excalidraw/ejercici1p6.excalidraw.md",
+    "Excalidraw/ejercicio6p6.excalidraw.md",
     "Practico6/Practico 6.md",
+    "Excalidraw/Ejercicio5P2.excalidraw.md",
+    "Excalidraw/Eje5P2e.excalidraw.md",
+    "Excalidraw/DiagramaRedFisicaConIps.excalidraw.md",
+    "Excalidraw/DiagramaRedFisica.excalidraw.md",
+    "Excalidraw/Libraries/local-library.excalidrawlib",
+    "Excalidraw/Libraries",
+    "Excalidraw/ejercici1p6.excalidraw.md",
     "Practico6",
+    "Excalidraw/Drawing 2026-11-10 18.23.16.excalidraw.md",
+    "Sin título.md",
     "Practico5/Practico5.md",
-    "Practico1/Practico 1.md",
     "Practico5/clock-app/public/index.html",
     "Practico5/clock-app/public/clock.png",
     "Practico5/clock-app/public",
@@ -212,8 +216,6 @@
     "Practico5/clock-app",
     "Practico5/clock-app.zip",
     "Practico5/chat-app/wsclient1.html",
-    "Practico5/chat-app/wsclient.html",
-    "Practico5/chat-app/wsclient-json.html",
     "Practico5/Pasted image 20261026132601.png",
     "Practico2/Practico 2.md",
     "Practico2/README.md",
@@ -234,11 +236,8 @@
     "Practico4/Pasted image 20260930215811.png",
     "Practico4/Pasted image 20260930202404.png",
     "README.md",
-    "Excalidraw/DiagramaRedFisicaConIps.excalidraw.md",
-    "Excalidraw/DiagramaRedFisica.excalidraw.md",
     "Excalidraw/Sin título.md",
-    "Excalidraw/Eje5P2e.excalidraw.md",
-    "Excalidraw/Ejercicio5P2.excalidraw.md",
+    "Practico1/Practico 1.md",
     "Practico1/RADME.md",
     "conflict-files-obsidian-git.md"
   ]
