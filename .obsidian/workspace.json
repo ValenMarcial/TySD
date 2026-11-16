@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "1b186bcde2723ba0",
+        "id": "176ec0123a7b1024",
         "type": "tabs",
         "children": [
           {
-            "id": "6ef670c1a62d99bd",
+            "id": "bb1049524e15d0c3",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -197,11 +197,11 @@
       "obsidian-excalidraw-plugin:Nuevo Bosquejo": false
     }
   },
-  "active": "560926c538c4f516",
+  "active": "bb1049524e15d0c3",
   "lastOpenFiles": [
+    "Practico6/Practico 6.md",
     "Excalidraw/ejercicio6p6.excalidraw.md",
     "Excalidraw/ejercici1p6.excalidraw.md",
-    "Practico6/Practico 6.md",
     "Practico6",
     "Practico5/Practico5.md",
     "Practico1/Practico 1.md",
