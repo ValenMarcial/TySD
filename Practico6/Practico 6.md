@@ -296,4 +296,64 @@ on msg 'update(key, value), req_id' from node j:
 # 6)
 ![[ejercicio6p6.excalidraw]]
 
-	
+
+# 7)
+Con m=3 tenemos:
+- hasta $2^3 = 8$ nodos en anillo
+- Espacio de identificadores de nodos $p: 0 \leq p < 2^m$ osea $p: 0 \leq p < 8$ osea de 0 a 7 nombres
+- succ(k) nodo activo con el menor $p \geq k$
+- El nodo p mantiene los valores con claves (hash) $p \leq k < succ(k)$
+- Acceso a un valor $v$ con $k = hash(v)$: Nodo $p = succ(k)$
+- Finger table: Tabla en p con [1..m] entradas sucesores con id exponenciales para hacer la busqueda en forma logaritmica.
+  1. $finger[i] = succ((p + 2^{i - 1})\text{ mod } 2^m)$ osea $finger[i] = succ((p + 2^{i - 1})\text{ mod } 8)$ con $(1 \leq i \leq m)$
+  2. Asi cuando un cliente se conecta al nodo p y busca la clave k:
+	  1. si $p = succ(k)$, p contiene (k,v) y retorna v
+	  2. Sino, contacta los sucesores en la finger table hasta encontrar la clave
+
+## a)
+![[ejercicio7ap6.excalidraw]]
+
+## b)
+Cuando alguien pide la clave k, hay que encontrar qué nodo es responsable de ella. Sin finger table, cada nodo solo conocería a su sucesor, y la búsqueda sería recorrer el anillo nodo por nodo.
+
+La finger table le da a cada nodo “atajos” hacia nodos lejanos. Las distancias de los atajos son **potencias de 2**: +1, +2, +4, +8... Así, en cada salto se puede recorrer al menos la mitad de la distancia restante, como en una búsqueda binaria. Resultado: **O(log N)** saltos.
+
+![[ejercicio7bp6.excalidraw]]
+
+## c)
+La busqueda de la clave 2 desde el nodo 7, la secuencia de mensajes son
+Paso 1: 
+- 7 =  succ(2)? NO
+- Busca en su finger table de mayor a menor el ultimo nodo que no se pase de 2
+  finger[3] = 4 se pasa
+  finger[2] = 1 sirve
+- Envia succ(2) al nodo 1
+Paso 2:
+- 1 = succ(2)? NO
+- Busca en su finger table de mayor a menor el ultimo nodo que no se pase de 2
+  finger[3] = 5 se pasa
+  finger[2] = 3 se pasa
+  finger[1] = 2 sirve
+- Envia succ(2) al nodo 4
+Paso 3:
+- 4 = succ(2)? SI
+- Contiene (2, v)
+- Retorna v
+
+## d)
+El nodo 5 se une al 1
+Paso 1:
+	5.join(1):
+		5.predecesor = nil
+		5.succesor = 1.find_succesor(5)
+	1.find_succesor(5) = 7 por lo tanto el succesor de 5 es 7
+Paso 2:
+	Stabilize (periodico)
+
+- 5.stabilize() consulta 7.predecesor() que devuelve 4, como 4 no esta entre 5 y 7, 5 mantiene al 7 como succesor. Luego 7.notify(5), como 5 esta entre 4 y 7 el 7 pasa a tener predecesor 5.
+- 4.stabilize() consulta su sucesor 7.predecesor() que devuelve 5, como 5 esta entre 4 y 7, 4 cambia su  sucesor a 5 y  5.notify(4) para que 5 tenga predecesor a 4 
+- 1.stabilize() y 7.stabilize() no cambian
+Paso 3:
+	fix_fingers que es donde cada nodo recalcula su fingers table
+![[ejercicio7dp6.excalidraw]]
+
